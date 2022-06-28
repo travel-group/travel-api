@@ -12,19 +12,19 @@ const signUp = async (req, res) => {
     const lastname = req?.body?.lastname
     const password = req?.body?.password
     if (username?.length < 3) {
-        res.send(errorResponse('Username is too short'))
+        return res.send(errorResponse('Username is too short'))
     }
     if (firstname?.length < 3) {
-        res.send(errorResponse('Frist name is too short'))
+        return res.send(errorResponse('Frist name is too short'))
     }
     if (lastname?.length < 3) {
-        res.send(errorResponse('last name is too short'))
+        return res.send(errorResponse('last name is too short'))
     }
     if (password?.length < 6) {
-        res.send(errorResponse('Password is too short'))
+        return res.send(errorResponse('Password is too short'))
     }
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false) {
-        res.send(errorResponse('Email is invalid'))
+        return res.send(errorResponse('Email is invalid'))
     }
     const [result , created] = await models.users.findOrCreate({
         where: {
@@ -37,10 +37,10 @@ const signUp = async (req, res) => {
             password: authService.hashPassword(password),
         }
     })
-    if (result , created) {
-        res.send(successResponse('User created successfully'))
+    if (created) {
+        return res.send(successResponse('User created successfully'))
     } else {
-        res.send(errorResponse('User is already registered'))
+        return res.send(errorResponse('User is already registered'))
     }
 }
 
