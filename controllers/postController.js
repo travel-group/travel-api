@@ -13,12 +13,10 @@ const addPost = async (req,res) => {
     const country_id  = req.body.country_id
     const category_id  = req.body.category_id
     if (title == "") {
-        res.send(errorResponse("Please fill the post title"));
-        return;
+        return res.send(errorResponse("Please fill the post title"));
     }
     if (description == "") {
-        res.send(errorResponse("Please fill the description"));
-        return;
+        return res.send(errorResponse("Please fill the description"));
     }
     const post = await models.posts.create({
             title,
@@ -35,9 +33,9 @@ const addPost = async (req,res) => {
         if (Array.isArray(country_id)) {
             post.setCountry(country_id);
         }
-        res.send(successResponse(('Post created successfully', {posts: postTransformer(post)})))
+        return res.send(successResponse(('Post created successfully', {posts: postTransformer(post)})))
     } else {
-        res.send(errorResponse('Error'))
+        return res.send(errorResponse('Error'))
     }
 }
 
@@ -72,9 +70,9 @@ const getPost = async (req, res) => {
         }
     })
     if (post && comments) {
-        res.send(successResponse("Success", {post: postTransformer(post), comments: commentsTransformer(comments)}))
+        return res.send(successResponse("Success", {post: postTransformer(post), comments: commentsTransformer(comments)}))
     } else {
-        res.send(errorResponse('There was an error'))
+        return res.send(errorResponse('There was an error'))
     }
 }
 
@@ -101,9 +99,9 @@ const getPostsByCountry = async (req, res, next) => {
         country_id :id
     });
     if (result) {
-        res.send(successResponse("Success" ,{posts: countryTransformer(result)}));
+        return res.send(successResponse("Success" ,{posts: countryTransformer(result)}));
     } else {
-        res.send(errorResponse("failed getting result"));
+        return res.send(errorResponse("failed getting result"));
     }
 };
 
@@ -132,9 +130,9 @@ const updatePost = async (req,res) => {
         }
     })
     if(newPost){
-        res.send(successResponse('Edited' , {post: (newPost)}))
+        return res.send(successResponse('Edited' , {post: (newPost)}))
     } else {
-        res.send(errorResponse('invalid'))
+        return res.send(errorResponse('invalid'))
     }
 }
 

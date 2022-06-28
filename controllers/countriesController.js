@@ -11,9 +11,9 @@ const addCountry = async (req,res) => {
                 }
     })
     if (country) {
-        res.send(successResponse('Country created successfully' ,{country: countryTransformer(country)}))
+        return res.send(successResponse('Country created successfully' ,{country: countryTransformer(country)}))
     } else {
-        res.send(errorResponse('Error'))
+        return res.send(errorResponse('Error'))
     }
 }
 
@@ -22,10 +22,9 @@ const addCountry = async (req,res) => {
 const getCountries = async (req, res) => {
     const countries = await models.countries.findAll({})
         if (countries) {
-            res.send(successResponse("Success", {countries: countriesTransformer(countries)}))
-            return
+            return res.send(successResponse("Success", {countries: countriesTransformer(countries)}))
         } else {
-            res.send(errorResponse('Error'))
+            return res.send(errorResponse('Error'))
         }
 }
 
@@ -38,9 +37,9 @@ const getCountry = async (req, res) => {
             id
         }})
     if (country) {
-        res.send(successResponse("Success", {country: countryTransformer(country)}))
+        return res.send(successResponse("Success", {country: countryTransformer(country)}))
     } else {
-        res.send(errorResponse('There was an error'))
+        return res.send(errorResponse('There was an error'))
     }
 }
 
@@ -52,9 +51,9 @@ const deleteCountry = async (req, res, next) => {
         }
     });
     if (deleted) {
-        res.send(successResponse('Country has been deleted'))
+        return res.send(successResponse('Country has been deleted'))
     } else {
-        res.send(errorResponse('error'))
+        return res.send(errorResponse('error'))
     };
 };
 

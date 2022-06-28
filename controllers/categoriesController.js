@@ -13,9 +13,9 @@ const addCategory = async (req,res) => {
                 }
     })
     if (created) {
-        res.send(successResponse('Category created successfully'))
+        return res.send(successResponse('Category created successfully'))
     } else {
-        res.send(errorResponse('Error'))
+        return res.send(errorResponse('Error'))
     }
 }
 
@@ -36,9 +36,9 @@ const getCategory = async (req, res) => {
             id
         }})
     if (category) {
-        res.send(successResponse("Success", {country:categoryTransformer(category)}))
+        return res.send(successResponse("Success", {country:categoryTransformer(category)}))
     } else {
-        res.send(errorResponse('There was an error'))
+        return res.send(errorResponse('There was an error'))
     }
 }
 
@@ -59,10 +59,10 @@ const updateCategory = async (req,res) => {
         }
     })
     if(newCategory) {  
-        res.send(successResponse('Edited'))
+        return res.send(successResponse('Edited'))
     } else {
         res.status(404)
-        res.send(errorResponse('Categoy not found'))
+        return res.send(errorResponse('Categoy not found'))
     }
 }
 

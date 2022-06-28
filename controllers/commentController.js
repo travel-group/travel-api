@@ -7,8 +7,7 @@ const addComment = async (req,res) => {
     const comment = req.body.comment
     const post_id = req.body.post_id
     if (comment == '') {
-        res.send(errorResponse('Please fill the Comment content'))
-        return
+        return res.send(errorResponse('Please fill the Comment content'))
     }
     const created = await models.comments.create({
         comment,
@@ -17,9 +16,9 @@ const addComment = async (req,res) => {
         post_id 
     })
     if (created) {
-        res.send(successResponse('Commentde'))
+        return res.send(successResponse('Commentde'))
     } else {
-        res.send(errorResponse('Error'))
+        return res.send(errorResponse('Error'))
     }
 }
 

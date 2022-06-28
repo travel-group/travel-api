@@ -26,7 +26,7 @@ const signUp = async (req, res) => {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false) {
         return res.send(errorResponse('Email is invalid'))
     }
-    const [result , created] = await models.users.findOrCreate({
+    const created = await models.users.findOrCreate({
         where: {
                 email,
                 username
@@ -59,12 +59,12 @@ const logIn = async (req, res, next) => {
     })
     if (user) {
         if (authService.comparePasswords(password,user.password)) {
-            res.send(successResponse("Success", {token: authService.signUser(user)}))
+            return res.send(successResponse("Success", {token: authService.signUser(user)}))
         } else {
-            res.send(errorResponse('Password is wrong'))
+            return res.send(errorResponse('Password is wrong'))
         }
     } else {
-        res.send(errorResponse('Username or Email is wrong'))
+        return res.send(errorResponse('Username or Email is wrong'))
     }
 }
 
@@ -72,8 +72,7 @@ const logIn = async (req, res, next) => {
 const getUsers = async (req, res) => {
     const users = await models.users.findAll({})
     if(users){
-        res.send(successResponse("Success" , {users: usersTransformer(users)}))
-        return
+        return res.send(successResponse("Success" , {users: usersTransformer(users)}))
     }
 }
 
@@ -85,11 +84,9 @@ const profile = async (req, res) => {
             id
         }})
     if (user) {
-        res.send(successResponse("Success", {user: (user)}))
-        return
+        return res.send(successResponse("Success", {user: (user)}))
     } else {
-        res.send(errorResponse('There was an error'))
-        return
+        return res.send(errorResponse('There was an error'))
     }
 }
 
@@ -124,7 +121,7 @@ const getUserPosts = async (req , res , next) => {
             {model : models.countries}
         ]
     })
-    res.send(successResponse("Success", {posts: postsTransformer(posts)}))
+    return res.send(successResponse("Success", {posts: postsTransformer(posts)}))
 
 }
 
@@ -146,20 +143,16 @@ const updateUser = async (req , res) => {
     if (!password) password = user.password
 
     if (firstname?.length < 3) {
-        res.send(errorResponse('New First name is too short'))
-        return 
+        return res.send(errorResponse('New First name is too short'))
     }
     if (lastname?.length < 3) {
-        res.send(errorResponse('New last name is too short'))
-        return 
+        return res.send(errorResponse('New last name is too short'))
     }
     if (username?.length < 3) {
-        res.send(errorResponse('New username is too short'))
-        return 
+        return res.send(errorResponse('New username is too short'))
     }
     if (password?.length < 6) {
-            res.send(errorResponse('New password is too short'))
-            return 
+        return res.send(errorResponse('New password is too short')) 
         }
         
         const newUser = await models.users.update({
@@ -176,11 +169,9 @@ const updateUser = async (req , res) => {
         }
         )
         if (newUser) {
-            res.send(successResponse('User has been updated', {usr:(newUser)}))
-            return 
+            return res.send(successResponse('User has been updated', {usr:(newUser)})) 
         } else {
-            res.send(errorResponse('Error'))
-            return
+            return res.send(errorResponse('Error'))
         }
 }
 
