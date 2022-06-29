@@ -47,9 +47,11 @@ const signUp = async (req, res) => {
 
 const logIn = async (req, res, next) => {
     var userNameOrEmail = req.body.userNameOrEmail
+        // var username = req.body.username
     var password = req.body.password
     const user = await models.users.findOne({
         where: {
+            // username
             [Op.or]:
                 [
                     { email: userNameOrEmail }, 
@@ -63,7 +65,7 @@ const logIn = async (req, res, next) => {
         } else {
             return res.send(errorResponse('Password is wrong'))
         }
-    } else {
+        } else {
         return res.send(errorResponse('Username or Email is wrong'))
     }
 }

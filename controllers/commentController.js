@@ -5,15 +5,15 @@ var { commentsTransformer } = require('../transformers/commentTransformers')
 
 const addComment = async (req,res) => {
     const comment = req.body.comment
-    const post_id = req.body.post_id
+    // const post_id = req.body.post_id
     if (comment == '') {
         return res.send(errorResponse('Please fill the Comment content'))
     }
     const created = await models.comments.create({
         comment,
-        // post_id: req.body.post_id,
+        post_id: req.body.post_id,
         user_id : req.user.id,
-        post_id 
+        // post_id 
     })
     if (created) {
         return res.send(successResponse('Commentde'))
