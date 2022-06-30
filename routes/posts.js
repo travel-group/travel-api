@@ -4,6 +4,8 @@ var { addPost , getPost , getPosts , getPostsByCategory  , getPostsByCountry , u
 var { isAuthenticated } = require('../middlewares/isAuthenticated')
 var { isOwner } = require('../middlewares/isOwner')
 const multer = require('multer')
+const path = require('path');
+
 
 
 
@@ -41,7 +43,7 @@ router.get('/' , getPosts)
 router.get('/:id' , getPost)
 router.get('/bycountry/:id' , getPostsByCountry)
 router.get('/bycategory/:id' , getPostsByCategory)
-router.put('/:id' , isAuthenticated , isOwner('post'), upload.single('picture') , updatePost)
+router.put('/:id' , isAuthenticated , isOwner('post'), upload.fields([{name : 'image' , maxCount: 1}]) , updatePost)
 router.delete('/:id' , isAuthenticated , isOwner('post') , deletePost)
 
 
