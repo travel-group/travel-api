@@ -7,7 +7,7 @@ var { isOwner } = require('../middlewares/isOwner');
 
 router.post('/signup' , signUp)
 router.post('/login' , logIn)
-router.post('/logout' , isAuthenticated , logOut)
+// router.post('/logout' , isAuthenticated , logOut)
 router.get('/' , isAuthenticated , isAdmin , getUsers)
 router.get('/posts' , isAuthenticated , getUserPosts)
 router.put('/update/:id' , isAuthenticated , isOwner , updateUser)

@@ -178,21 +178,21 @@ const updateUser = async (req , res) => {
 }
 
 
-const logOut = async (req, res) => {
-    const token = req.user.token;
-    const [result, created] = await models.token.findOrCreate({
-        where: {
-            token
-        },
-        defaults: {
-            token
-        }
-    })
-    console.log(result) 
-        if (created)
-            return res.send(successResponse("Logged out"));
-            return res.send(errorResponse("Invalidating token has failed"));
-    };
+// const logOut = async (req, res) => {
+//     const token = req.user.token;
+//     const [result, created] = await models.token.findOrCreate({
+//         where: {
+//             token
+//         },
+//         defaults: {
+//             token
+//         }
+//     })
+//     console.log(result) 
+//         if (created)
+//             return res.send(successResponse("Logged out"));
+//             return res.send(errorResponse("Invalidating token has failed"));
+//     };
 
 
 
@@ -204,5 +204,5 @@ module.exports = {
     getUserPosts,
     updateUser,
     deleteUser,
-    logOut
+    // logOut
 }

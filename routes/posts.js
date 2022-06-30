@@ -21,7 +21,7 @@ const acceptFile = function (req, file, cb) {
         'image/jpeg',
         'image/jpg',
         'image/png',
-        'image/webp',
+        'image/webp'
     ]
     if (acceptedMimType.includes(file.mimetype)) {
         cb(null, true)
@@ -36,7 +36,7 @@ const upload = multer({
 });
 
 
-router.post('/add' , isAuthenticated , upload.single('picture') , addPost)
+router.post('/add' , isAuthenticated , upload.fields([{name : 'image' , maxCount: 1}]) , addPost)
 router.get('/' , getPosts)
 router.get('/:id' , getPost)
 router.get('/bycountry/:id' , getPostsByCountry)
