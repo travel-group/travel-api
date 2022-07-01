@@ -1,7 +1,8 @@
-exports.successResponse = function(messages = '', extras = {}) {
+exports.successResponse = function(messages = '', extras = {} ,user) {
     var response = {
         success: true,
-        messages
+        messages,
+        user
     }
     response = {...response, ...extras}
     return response
