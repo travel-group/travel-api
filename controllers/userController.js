@@ -125,7 +125,7 @@ const getUserPosts = async (req , res , next) => {
             {model : models.countries}
         ]
     })
-    return res.send(successResponse("Success", {posts: postsTransformer(posts)}))
+    return res.send(successResponse("Success", {data: postsTransformer(posts)}))
 
 }
 
