@@ -23,7 +23,7 @@ const addCategory = async (req,res) => {
 
 const getCategories = async (req, res) => {
     const categories = await models.categories.findAll({})
-    return res.send(successResponse("Success", {categories:(categories)}))
+    return res.send(successResponse("Success", {data:(categories)}))
 }
 
 
@@ -33,10 +33,11 @@ const getCategory = async (req, res) => {
     const id  = req?.params?.id
     const category = await models.categories.findOne({
         where: {
-            id
+            id,
+            name
         }})
     if (category) {
-        return res.send(successResponse("Success", {country:categoryTransformer(category)}))
+        return res.send(successResponse("Success", {data:categoryTransformer(category)}))
     } else {
         return res.send(errorResponse('There was an error'))
     }

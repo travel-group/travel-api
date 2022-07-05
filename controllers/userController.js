@@ -59,7 +59,6 @@ const logIn = async (req, res, next) => {
                 ]
         }
     })
-    console.log(user,'--------------')
 
     if (user) {
         if (authService.comparePasswords(password,user.password)) {
@@ -76,7 +75,7 @@ const logIn = async (req, res, next) => {
 const getUsers = async (req, res) => {
     const users = await models.users.findAll({})
     if(users){
-        return res.send(successResponse("Success" , {users: usersTransformer(users)}))
+        return res.send(successResponse("Success" , {data: usersTransformer(users)}))
     }
 }
 
@@ -88,7 +87,7 @@ const profile = async (req, res) => {
             id
         }})
     if (user) {
-        return res.send(successResponse("Success", {user: (user)}))
+        return res.send(successResponse("Success", {data: (user)}))
     } else {
         return res.send(errorResponse('There was an error'))
     }
@@ -173,7 +172,7 @@ const updateUser = async (req , res) => {
         }
         )
         if (newUser) {
-            return res.send(successResponse('User has been updated', {usr:(newUser)})) 
+            return res.send(successResponse('User has been updated', {data:(newUser)})) 
         } else {
             return res.send(errorResponse('Error'))
         }

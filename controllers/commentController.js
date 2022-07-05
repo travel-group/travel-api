@@ -31,7 +31,7 @@ const getComments = async (req, res) => {
             {model: models.users},
         ]
     })
-    return res.send(successResponse("Success", {comments: commentsTransformer(comments)}))
+    return res.send(successResponse("Success", {data: commentsTransformer(comments)}))
 }
 
 

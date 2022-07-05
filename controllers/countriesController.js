@@ -11,7 +11,7 @@ const addCountry = async (req,res) => {
                 }
     })
     if (country) {
-        return res.send(successResponse('Country created successfully' ,{country: countryTransformer(country)}))
+        return res.send(successResponse('Country created successfully' ,{data: countryTransformer(country)}))
     } else {
         return res.send(errorResponse('Error'))
     }
@@ -22,7 +22,7 @@ const addCountry = async (req,res) => {
 const getCountries = async (req, res) => {
     const countries = await models.countries.findAll({})
         if (countries) {
-            return res.send(successResponse("Success", {countries: countriesTransformer(countries)}))
+            return res.send(successResponse("Success", {data: countriesTransformer(countries)}))
         } else {
             return res.send(errorResponse('Error'))
         }
@@ -37,7 +37,7 @@ const getCountry = async (req, res) => {
             id
         }})
     if (country) {
-        return res.send(successResponse("Success", {country: countryTransformer(country)}))
+        return res.send(successResponse("Success", {data: countryTransformer(country)}))
     } else {
         return res.send(errorResponse('There was an error'))
     }
