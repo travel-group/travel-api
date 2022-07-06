@@ -27,13 +27,8 @@ const addPost = async (req,res) => {
             category_id
         })
     if ( post ) {
-        if (Array.isArray(category_id)) {
-            post.setCategory(category_id);
-        }
-        if (Array.isArray(country_id)) {
-            post.setCountry(country_id);
-        }
-        return res.send(successResponse(('Post created successfully', {data: postTransformer(post)})))
+        
+        return res.send(successResponse(("Post created successfully" , {data: postTransformer(post)})))
     } else {
         return res.send(errorResponse('Error'))
     }

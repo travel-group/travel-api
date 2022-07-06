@@ -34,7 +34,7 @@ const acceptFile = function (req, file, cb) {
 const upload = multer({
     storage: storage,
     fileFilter: acceptFile,
-    limits: { fileSize: 10485760 }
+    limits: { fileSize: 1048576000 }
 });
 
 

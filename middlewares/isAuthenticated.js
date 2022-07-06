@@ -12,12 +12,14 @@ const isAuthenticated = async (req, res, next) => {
     if(isInvalid) return res.send(errorResponse('Token is invalid'))
     if (token) {
         const isVerified = authService.verifyToken(req, token)
+   
         if (isVerified) {
             return next()
         }
     }
     res.status(401)
     res.send(errorResponse('Please Login'))
+    return
 }
 
 module.exports = { isAuthenticated }

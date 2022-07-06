@@ -21,14 +21,12 @@ var authService = {
     verifyToken: (req, token) => {
         try {
             const decodedData = jwt.verify(token, `${process.env.JWT_SECRET_KEY}`)
-            console.log("DECODED DATA IS : ",decodedData)
-            console.log("DECODEDDATA.ADMIN IS :", decodedData.admin)
             req.user = {
                 id: decodedData.id,
                 email: decodedData.email,
                 token: token,
                 role: decodedData.admin
-                };
+            };
             return (decodedData?.id) ? decodedData : false
         } catch(e) {
             return false
