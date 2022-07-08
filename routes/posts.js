@@ -38,12 +38,12 @@ const upload = multer({
 });
 
 
-router.post('/add' , isAuthenticated , upload.fields([{name : 'image' , maxCount: 1}]) , addPost)
+router.post('/add' , isAuthenticated , upload.single('image') , addPost)
 router.get('/' , getPosts)
 router.get('/:id' , getPost)
 router.get('/bycountry/:id' , getPostsByCountry)
 router.get('/bycategory/:id' , getPostsByCategory)
-router.put('/:id' , isAuthenticated , isOwner('post'), upload.fields([{name : 'image' , maxCount: 1}]) , updatePost)
+router.put('/:id' , isAuthenticated , isOwner('post'), upload.single('picture') , updatePost)
 router.delete('/:id' , isAuthenticated , isOwner('post') , deletePost)
 
 

@@ -4,31 +4,33 @@ var { postsTransformer , postTransformer } = require('../transformers/postsTrans
 var { categoryTransformer } = require('../transformers/categoriesTransformers')
 var { countryTransformer } = require('../transformers/countriesTransformers');
 var { commentsTransformer } = require('../transformers/commentTransformers');
+const fs = require("fs");
 
 
 const addPost = async (req,res) => {
     const title = req?.body?.title
-    const image = req?.body?.image
+    const image = req?.file?.image
     const description  = req?.body?.description
-    const country_id  = req.body.country_id
-    const category_id  = req.body.category_id
+    const country_id  = req?.body?.country_id
+    const category_id  = req?.body?.category_id
     if (title == "") {
         return res.send(errorResponse("Please fill the post title"));
     }
     if (description == "") {
         return res.send(errorResponse("Please fill the description"));
     }
+    console.log(image, 'ddddddd')
     const post = await models.posts.create({
             title,
-            image,
+            image : req.file?.filename,
             country_id,
-            user_id: req.user.id,
+            user_id : req.user.id,
             description,
             category_id
         })
     if ( post ) {
-        
-        return res.send(successResponse(("Post created successfully" , {data: postTransformer(post)})))
+        res.send(successResponse(("Post created successfully" , {data: postTransformer(post)})))
+        return
     } else {
         return res.send(errorResponse('Error'))
     }
@@ -108,7 +110,10 @@ const updatePost = async (req,res) => {
     if(!post) return res.send(errorResponse("No post found"));
     const {title, image, description, country_id , category_id} =req?.body;
     if(!title) title = post.title;
-    if(!image) image = post.image;
+    if (req.file) {
+        fs.unlink("uploads/" + post.image, () => { });
+        post.picture = req.file?.filename;
+    }
     if(!description) description = post.description;
     if(!country_id) country_id = post.country_id;
     if(!category_id) category_id = post.category_id
