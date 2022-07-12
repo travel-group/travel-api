@@ -9,12 +9,16 @@ const isOwner = (type) => {
         };
         switch (type) {
             case 'post':
-                const postId = req.params.id
+                const postId = req.params.id;
                 const post = await models.posts.findOne({
                     where: {
                         id: postId
                     }
                 })
+                console.log("postId = ", postId)
+                console.log("post = ", post)
+                console.log("post.user_id == ", post?.user_id)
+                console.log("req.user.id== ", req.user.id)
                 if (post?.user_id === req.user.id) {
                     return next()
                 }
