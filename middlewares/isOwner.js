@@ -15,12 +15,13 @@ const isOwner = (type) => {
                         id: postId
                     }
                 })
-                if (post?.user_id === req.user.id) {
+                if (post?.user_id == req.user.id) {
                     return next()
+                } else {
+                    res.status(403)
+                    return res.send(errorResponse('You are not authorized'))
                 }
-                res.status(403)
-                return res.send(errorResponse('You are not authorized'))
-                
+
             case 'comment':
                 const commentId = req.params.id
                 const comment = await models.comments.findOne({
