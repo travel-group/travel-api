@@ -13,7 +13,7 @@ const addCategory = async (req,res) => {
                 }
     })
     if (created) {
-        return res.send(successResponse('Category created successfully'))
+        return res.send(successResponse('Category created successfully' , {data:(created)} ))
     } else {
         return res.send(errorResponse('Error'))
     }
@@ -33,8 +33,7 @@ const getCategory = async (req, res) => {
     const id  = req?.params?.id
     const category = await models.categories.findOne({
         where: {
-            id,
-            name
+            id
         }})
     if (category) {
         return res.send(successResponse("Success", {data:categoryTransformer(category)}))
