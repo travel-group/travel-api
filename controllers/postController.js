@@ -121,7 +121,7 @@ const updatePost = async (req, res) => {
     if (!category_id) category_id = post.category_id
     const newPost = await models.posts.update({
         title,
-        image,
+        image: req.file?.filename,
         description,
         country_id,
         category_id

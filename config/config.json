@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "ayash2063",
+    "password": "mondkaled4",
     "database": "travel-blogs",
     "host": "127.0.0.1",
     "dialect": "mysql",
