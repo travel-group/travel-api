@@ -68,11 +68,11 @@ const updateCategory = async (req,res) => {
 
 
 
-const deleteCategory = async (req,res) => {
+const deleteCategory = async (req,res) => { 
     const id = +req.params.id
     const category = await models.categories.findByPk(id)
     if(category) {
-        if(category) {
+        // if(category) {
             const deleted = await models.categories.destroy({
                 where: {
                     id
@@ -83,7 +83,7 @@ const deleteCategory = async (req,res) => {
             } else {
                 return res.send(errorResponse('error'))
             }
-        }
+        // }
     }
 }
 
