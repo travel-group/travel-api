@@ -15,15 +15,7 @@ const isOwner = (type) => {
                         id: postId
                     }
                 })
-<<<<<<< HEAD
                 if (post?.user_id == req.user.id) {
-=======
-                console.log("postId = ", postId)
-                console.log("post = ", post)
-                console.log("post.user_id == ", post?.user_id)
-                console.log("req.user.id== ", req.user.id)
-                if (post?.user_id === req.user.id) {
->>>>>>> 16c72c6190c032f5cd0e86901490812e0563b588
                     return next()
                 } else {
                     res.status(403)
