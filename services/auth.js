@@ -4,7 +4,6 @@ var jwt = require('jsonwebtoken')
 
 var authService = {
     signUser: function (user) {
-        console.log("ADMIN IS : ", user.admin)
         const token = jwt.sign({
             id: user.id,
             username: user.username,

@@ -19,7 +19,6 @@ const addPost = async (req, res) => {
     if (description == "") {
         return res.send(errorResponse("Please fill the description"));
     }
-    console.log(image, 'ddddddd')
     const post = await models.posts.create({
         title,
         image: req.file?.filename,
@@ -80,11 +79,11 @@ const getPostsByCategory = async (req, res, next) => {
     const id = req.params.id
     const result = await models.posts.findAll({
         where: {
-            category_id: id
+            category_id : id
         }
     })
     if (result) {
-        res.send(successResponse("Success", { data: categoryTransformer(result) }));
+        res.send(successResponse("Success", { data: postsTransformer(result) }));
     } else {
         res.send(errorResponse("failed getting result"));
     }
