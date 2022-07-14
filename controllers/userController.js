@@ -62,7 +62,7 @@ const logIn = async (req, res, next) => {
 
     if (user) {
         if (authService.comparePasswords(password,user.password)) {
-            return res.send(successResponse("Success", {token: authService.signUser(user)},{admin:user.admin}))
+            return res.send(successResponse("Success", {token: authService.signUser(user)},user))
         } else {
             return res.send(errorResponse('Password is wrong'))
         }
