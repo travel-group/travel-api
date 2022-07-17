@@ -128,55 +128,55 @@ const getUserPosts = async (req , res , next) => {
 
 }
 
-const updateUser = async (req , res) => {
-    const id = req.params.id;
+const updateUser = async (req, res) => {
     const username = req?.body?.username
     const email = req?.body?.email
     const firstname = req?.body?.firstname
     const lastname = req?.body?.lastname
     const password = req?.body?.password
 
-    const user = await models.users.findByPk(id)
-    if(!user) return res.send(errorResponse('User not found'))
-
-    if (!firstname) firstname = user.firstname
-    if (!lastname) lastname = user.lastname
-    if (!email) email = user.email
-    if (!username) username = user.username
-    if (!password) password = user.password
-
-    if (firstname?.length < 3) {
-        return res.send(errorResponse('New First name is too short'))
+    if (firstname?.length < 2) {
+        res.send(response.errorResponse('The first name is too short'))
+        return 
     }
-    if (lastname?.length < 3) {
-        return res.send(errorResponse('New last name is too short'))
+    if (lastname?.length < 2) {
+        res.send(response.errorResponse('The last name is too short'))
+        return 
     }
     if (username?.length < 3) {
-        return res.send(errorResponse('New username is too short'))
+        res.send(response.errorResponse('The username is too short'))
+        return 
     }
-    if (password?.length < 6) {
-        return res.send(errorResponse('New password is too short')) 
+    if (!validateEmail(email)) {
+        res.send(response.errorResponse('The email is invalid'))
+        return 
+    }
+    if (password?.length > 0) {
+        if (password?.length <= 6) {
+            res.send(response.errorResponse('New password is too short'))
+            return
         }
-        
-        const newUser = await models.users.update({
-            firstname,
-            lastname,
-            email,
-            username,
-            password : authService.hashPassword(password)
-        },
-        {
-            where : {
-                id : user.id
-            }
-        }
-        )
-        if (newUser) {
-            return res.send(successResponse('User has been updated', {data:(newUser)})) 
-        } else {
-            return res.send(errorResponse('Error'))
-        }
-}
+    }
+
+    const user = await models.User.findByPk(id);
+
+    if (user) {
+        user.firstname = firstname
+        user.lastname = lastname
+        user.username = username
+        user.email = email
+        if (password?.length > 0) {
+            user.password = authService.hashPassword(password);
+        };
+        user.save().then((user) => {
+            res.send(response.successResponse(userTransformer(user), 'User has been updated'));
+            return
+        })
+    } else {
+        res.status(404)
+        res.send(response.errorResponse('The user is undefined'));
+    };
+};
 
 
 
