@@ -10,7 +10,7 @@ router.post('/login' , logIn)
 // router.post('/logout' , isAuthenticated , logOut)
 router.get('/' , isAuthenticated , isAdmin , getUsers)
 router.get('/posts' , isAuthenticated , getUserPosts)
-router.put('/update/:id' , isAuthenticated , isOwner , updateUser)
+router.put('/update/:id' , isAuthenticated , updateUser)
 router.get('/:id' , isAuthenticated , isOwner, profile)
 router.delete('/:id' , isAuthenticated , isAdmin , deleteUser)
 

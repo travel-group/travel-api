@@ -129,6 +129,7 @@ const getUserPosts = async (req , res , next) => {
 }
 
 const updateUser = async (req, res) => {
+    console.log("i am updating the user");
     const username = req?.body?.username
     const email = req?.body?.email
     const firstname = req?.body?.firstname
@@ -136,29 +137,30 @@ const updateUser = async (req, res) => {
     const password = req?.body?.password
 
     if (firstname?.length < 2) {
-        res.send(response.errorResponse('The first name is too short'))
+        res.send(errorResponse('The first name is too short'))
         return 
     }
     if (lastname?.length < 2) {
-        res.send(response.errorResponse('The last name is too short'))
+        res.send(errorResponse('The last name is too short'))
         return 
     }
     if (username?.length < 3) {
-        res.send(response.errorResponse('The username is too short'))
+        res.send(errorResponse('The username is too short'))
         return 
     }
-    if (!validateEmail(email)) {
-        res.send(response.errorResponse('The email is invalid'))
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        res.send(errorResponse('The email is invalid'))
         return 
     }
     if (password?.length > 0) {
-        if (password?.length <= 6) {
-            res.send(response.errorResponse('New password is too short'))
+        if (password?.length < 6) {
+            res.send(errorResponse('New password is too short'))
             return
         }
     }
 
-    const user = await models.User.findByPk(id);
+    console.log("user id: ", req.user.id);
+    const user = await models.users.findByPk(req.user.id)
 
     if (user) {
         user.firstname = firstname
@@ -169,12 +171,12 @@ const updateUser = async (req, res) => {
             user.password = authService.hashPassword(password);
         };
         user.save().then((user) => {
-            res.send(response.successResponse(userTransformer(user), 'User has been updated'));
+            res.send(successResponse('User has been updated', {user: userTransformer(user)} ));
             return
         })
     } else {
         res.status(404)
-        res.send(response.errorResponse('The user is undefined'));
+        res.send(errorResponse('The user is undefined'));
     };
 };
 

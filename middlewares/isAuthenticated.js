@@ -14,6 +14,7 @@ const isAuthenticated = async (req, res, next) => {
         const isVerified = authService.verifyToken(req, token)
    
         if (isVerified) {
+            console.log("Verified");
             return next()
         }
     }

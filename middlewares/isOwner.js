@@ -2,7 +2,10 @@ var models = require('../models');
 var { errorResponse } = require('../helpers/response')
 
 const isOwner = (type) => {
+    console.log("type for owner : ", type);
+
     return async (req, res, next) => {
+        console.log("type for owner : ", type);
         const user = await models.users.findByPk(req.user.id)
         if (user?.admin == 1) {
             return next()
@@ -16,6 +19,7 @@ const isOwner = (type) => {
                     }
                 })
                 if (post?.user_id == req.user.id) {
+                    console.log("isOwner true");
                     return next()
                 } else {
                     res.status(403)
